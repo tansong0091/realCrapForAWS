@@ -1,6 +1,6 @@
 {
     "family": "tstest-fargate-task",
-    "executionRoleArn": "arn:aws-cn:iam::627484392488:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws-cn:iam::123456789012:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
     "containerDefinitions": [
         {

@@ -1,10 +1,10 @@
 {
     "cluster": "tstest",
     "serviceName": "tstest-svc",
-    "taskDefinition": "arn:aws-cn:ecs:cn-north-1:627484392488:task-definition/tstest-fargate-task:1",
+    "taskDefinition": "arn:aws-cn:ecs:cn-north-1:123456789012:task-definition/tstest-fargate-task:1",
     "loadBalancers": [
         {
-            "targetGroupArn": "arn:aws-cn:elasticloadbalancing:cn-north-1:627484392488:targetgroup/tstest/177a6c21454ace05",
+            "targetGroupArn": "arn:aws-cn:elasticloadbalancing:cn-north-1:123456789012:targetgroup/tstest/177a6c21454ace05",
             "containerName": "fargate-app1",
             "containerPort": 80
         }
