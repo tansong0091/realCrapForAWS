@@ -1,0 +1,12 @@
+{
+    "applicationName": "tstestFargate",
+    "deploymentGroupName": "tstestDGrp",
+    "revision": {
+        "revisionType": "S3",
+        "s3Location": {
+            "bucket": "ts-test",
+            "key": "appspec.json",
+            "bundleType": "JSON"
+        }
+    }
+}
