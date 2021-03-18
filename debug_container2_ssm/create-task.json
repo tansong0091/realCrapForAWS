@@ -1,0 +1,49 @@
+{
+    "family": "tstest-fargate-task",
+    "taskRoleArn": "arn:aws-cn:iam::XXXXX:role/tsECSTaskRole",
+    "executionRoleArn": "arn:aws-cn:iam::XXXXX:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+        {
+            "name": "fargate-app1",
+            "image": "tansong0091/httpd-ssh:test-only",
+	    "linuxParameters": {
+	              "initProcessEnabled": true
+            },
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+			"environment": [
+                {
+                    "name": "SSH_PUBLIC_KEY",
+                    "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQC/alWrS+HH5KkPbso+Tsy+Z0WGTX5wvXvon5OacLMyOU3gj2mbbIifasXf/RadpuywuyW3uFirtRlPmSb5Q0PVLODku503Xettw+u6/Z22VV7F2ACgg4iHaCo2SR4L8saUrLLfcKXKr/WCn3w7uYcqGsXEcSFCCSZgn4BoZJqP4Q=="
+                }
+            ],
+			"mountPoints": [
+				{
+					"sourceVolume": "myEfsVolume",
+					"containerPath": "/usr/local/apache2/logs"
+				}
+			]			
+        }
+    ],
+	"volumes": [
+        {
+            "name": "myEfsVolume",
+            "efsVolumeConfiguration": {
+                "fileSystemId": "fs-19fe4984",
+                "rootDirectory": "/app1log"
+            }
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512"
+}

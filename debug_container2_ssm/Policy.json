@@ -1,0 +1,42 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetEncryptionConfiguration",
+                "logs:CreateLogStream",
+                "logs:DescribeLogStreams",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "arn:aws-cn:logs:cn-north-1:XXXXX:log-group:/aws/ecs/tsECSExecLog",
+                "arn:aws-cn:logs:cn-north-1:XXXXX:log-group:/aws/ecs/tsECSExecLog:*",
+                "arn:aws-cn:s3:::ts-test"
+            ]
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": "s3:PutObject",
+            "Resource": [
+                "arn:aws-cn:s3:::ts-test",
+                "arn:aws-cn:s3:::ts-test/*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "ssmmessages:CreateDataChannel",
+                "logs:DescribeLogGroups",
+                "ssmmessages:OpenDataChannel",
+                "ssmmessages:OpenControlChannel",
+                "ssmmessages:CreateControlChannel",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
