@@ -1,0 +1,25 @@
+rule pattern
+
+{
+  "source": [ 
+    "aws.codebuild"
+  ], 
+  "detail-type": [
+    "CodeBuild Build Phase Change" 
+  ],
+  "detail": {
+    "completed-phase": [
+      "POST_BUILD"
+    ],
+    "completed-phase-status": [
+      "SUCCEEDED"
+    ],
+    "project-name": [
+      "tstestCodeCommit"
+    ]
+  }  
+}
+
+return event
+
+{'version': '0', 'id': '54f2489d-ce97-880b-1b9b-9927a99491bd', 'detail-type': 'CodeBuild Build Phase Change', 'source': 'aws.codebuild', 'account': 'XXXX', 'time': '2021-03-30T08:25:09Z', 'region': 'cn-north-1', 'resources': ['arn:aws-cn:codebuild:cn-north-1:XXXX:build/tstestCodeCommit:3b2ef591-2448-4f2c-b07b-0ff98294675b'], 'detail': {'completed-phase': 'POST_BUILD', 'project-name': 'tstestCodeCommit', 'build-id': 'arn:aws-cn:codebuild:cn-north-1:XXXX:build/tstestCodeCommit:3b2ef591-2448-4f2c-b07b-0ff98294675b', 'completed-phase-context': '[: ]', 'additional-information': {'cache': {'type': 'NO_CACHE'}, 'build-number': 16.0, 'timeout-in-minutes': 15.0, 'build-complete': False, 'initiator': 'TanSong', 'build-start-time': 'Mar 30, 2021 8:24:01 AM', 'source': {'location': 'https://git-codecommit.cn-north-1.amazonaws.com.cn/v1/repos/tstestrep', 'git-clone-depth': 1.0, 'type': 'CODECOMMIT', 'git-submodules-config': {'fetch-submodules': False}}, 'source-version': 'refs/heads/master', 'artifact': {'location': 'arn:aws-cn:s3:::ts-test/tstestCodeCommitArtifect/tstestCodeCommit'}, 'environment': {'image': 'aws/codebuild/amazonlinux2-x86_64-standard:3.0', 'privileged-mode': True, 'image-pull-credentials-type': 'CODEBUILD', 'compute-type': 'BUILD_GENERAL1_SMALL', 'type': 'LINUX_CONTAINER', 'environment-variables': [{'name': 'AWS_DEFAULT_REGION', 'type': 'PLAINTEXT', 'value': 'cn-north-1'}, {'name': 'AWS_ACCOUNT_ID', 'type': 'PLAINTEXT', 'value': 'XXXX'}, {'name': 'IMAGE_REPO_NAME', 'type': 'PLAINTEXT', 'value': 'tstest'}, {'name': 'IMAGE_TAG', 'type': 'PLAINTEXT', 'value': 'latest'}]}, 'project-file-system-locations': [], 'logs': {'group-name': 'tstestCodeCommit', 'stream-name': '3b2ef591-2448-4f2c-b07b-0ff98294675b', 'deep-link': 'https://console.amazonaws.cn/cloudwatch/home?region=cn-north-1#logEvent:group=tstestCodeCommit;stream=3b2ef591-2448-4f2c-b07b-0ff98294675b'}, 'phases': [{'phase-context': [], 'start-time': 'Mar 30, 2021 8:24:01 AM', 'end-time': 'Mar 30, 2021 8:24:01 AM', 'duration-in-seconds': 0.0, 'phase-type': 'SUBMITTED', 'phase-status': 'SUCCEEDED'}, {'phase-context': [], 'start-time': 'Mar 30, 2021 8:24:01 AM', 'end-time': 'Mar 30, 2021 8:24:02 AM', 'duration-in-seconds': 1.0, 'phase-type': 'QUEUED', 'phase-status': 'SUCCEEDED'}, {'phase-context': [': '], 'start-time': 'Mar 30, 2021 8:24:02 AM', 'end-time': 'Mar 30, 2021 8:24:42 AM', 'duration-in-seconds': 39.0, 'phase-type': 'PROVISIONING', 'phase-status': 'SUCCEEDED'}, {'phase-context': [': '], 'start-time': 'Mar 30, 2021 8:24:42 AM', 'end-time': 'Mar 30, 2021 8:24:47 AM', 'duration-in-seconds': 4.0, 'phase-type': 'DOWNLOAD_SOURCE', 'phase-status': 'SUCCEEDED'}, {'phase-context': [': '], 'start-time': 'Mar 30, 2021 8:24:47 AM', 'end-time': 'Mar 30, 2021 8:24:47 AM', 'duration-in-seconds': 0.0, 'phase-type': 'INSTALL', 'phase-status': 'SUCCEEDED'}, {'phase-context': [': '], 'start-time': 'Mar 30, 2021 8:24:47 AM', 'end-time': 'Mar 30, 2021 8:24:54 AM', 'duration-in-seconds': 7.0, 'phase-type': 'PRE_BUILD', 'phase-status': 'SUCCEEDED'}, {'phase-context': [': '], 'start-time': 'Mar 30, 2021 8:24:54 AM', 'end-time': 'Mar 30, 2021 8:25:09 AM', 'duration-in-seconds': 14.0, 'phase-type': 'BUILD', 'phase-status': 'SUCCEEDED'}, {'phase-context': [': '], 'start-time': 'Mar 30, 2021 8:25:09 AM', 'end-time': 'Mar 30, 2021 8:25:10 AM', 'duration-in-seconds': 1.0, 'phase-type': 'POST_BUILD', 'phase-status': 'SUCCEEDED'}, {'start-time': 'Mar 30, 2021 8:25:10 AM', 'phase-type': 'UPLOAD_ARTIFACTS'}], 'queued-timeout-in-minutes': 480.0}, 'completed-phase-status': 'SUCCEEDED', 'completed-phase-duration-seconds': 1.0, 'version': '1', 'completed-phase-start': 'Mar 30, 2021 8:25:09 AM', 'completed-phase-end': 'Mar 30, 2021 8:25:10 AM'}}

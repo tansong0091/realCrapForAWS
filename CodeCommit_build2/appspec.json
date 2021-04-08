@@ -1,0 +1,18 @@
+{
+  "version": 0.0,
+  "Resources": [
+    {
+      "TargetService": {
+        "Type": "AWS::ECS::Service",
+        "Properties": {
+          "TaskDefinition": "arn:aws-cn:ecs:cn-north-1:XXXX:task-definition/tstest-fargate-task:12",
+          "LoadBalancerInfo": {
+            "ContainerName": "fargate-app1",
+            "ContainerPort": 80
+          }
+        }
+      }
+    }
+  ]
+}
+

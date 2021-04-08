@@ -1,0 +1,41 @@
+{
+  "StartAt": "Lambda Callback",
+  "TimeoutSeconds": 600,
+  "States": {
+    "Lambda Callback": {
+      "Type": "Task",
+      "Resource": "arn:aws-cn:states:::lambda:invoke.waitForTaskToken",
+      "Parameters": {
+        "FunctionName": "arn:aws-cn:lambda:cn-north-1:XXXX:function:tsSendMailforSF",
+        "Payload": {
+          "ExecutionContext.$": "$$",
+          "APIGatewayEndpoint": "http://tstest-youralb.cn-north-1.elb.amazonaws.com.cn:100"
+        }
+      },
+      "Next": "ManualApprovalChoiceState"
+    },
+    "ManualApprovalChoiceState": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.Status",
+          "StringEquals": "Approved! Task approved",
+          "Next": "ApprovedPassState"
+        },
+        {
+          "Variable": "$.Status",
+          "StringEquals": "Rejected! Task rejected",
+          "Next": "RejectedPassState"
+        }
+      ]
+    },
+    "ApprovedPassState": {
+      "Type": "Pass",
+      "End": true
+    },
+    "RejectedPassState": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
