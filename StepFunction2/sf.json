@@ -1,0 +1,49 @@
+{
+  "StartAt": "Lambda Callback",
+  "TimeoutSeconds": 600,
+  "States": {
+    "Lambda Callback": {
+      "Type": "Task",
+      "Resource": "arn:aws-cn:states:::lambda:invoke.waitForTaskToken",
+      "InputPath": "$.detail",
+      "Parameters": {
+        "FunctionName": "arn:aws-cn:lambda:cn-north-1:XXXX:function:tsSendMailforSF",
+        "Payload": {
+          "ExecutionContext.$": "$$",
+          "APIGatewayEndpoint": "http://tstest-yourALB.cn-north-1.elb.amazonaws.com.cn:100",
+          "project-name.$": "$.project-name"
+        }
+      },
+      "ResultPath": "$.detail.taskResult",
+      "OutputPath": "$.detail",
+      "Next": "ManualApprovalChoiceState"
+    },
+    "ManualApprovalChoiceState": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.taskResult.Status",
+          "StringEquals": "Approved! Task approved",
+          "Next": "ApprovedPassState"
+        },
+        {
+          "Variable": "$.taskResult.Status",
+          "StringEquals": "Rejected! Task rejected",
+          "Next": "RejectedPassState"
+        }
+      ]
+    },
+    "ApprovedPassState":  {
+      "Type": "Task",
+      "Resource": "arn:aws-cn:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws-cn:lambda:cn-north-1:XXXX:function:tsCodeBuildTriggerDeploy"
+      },
+      "End": true
+    },
+    "RejectedPassState": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
