@@ -1,0 +1,103 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: logging
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: fluent-bit
+  namespace: logging
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::252557384592:role/tsserviceaccounts3
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluent-bit-config
+  namespace: logging
+  labels:
+    k8s-app: fluent-bit
+data:
+  # Configuration files: server, input, filters and output
+  # ======================================================
+  fluent-bit.conf: |
+    [SERVICE]
+        Flush         1
+        Log_Level     debug
+        Daemon        off
+        HTTP_Server   On
+        HTTP_Listen   0.0.0.0
+        HTTP_Port     2020
+    [INPUT]
+        Name              tail
+        Tag               httpd.access.stage
+        Path              /tsapplog/*access*log
+        DB                /tsapplog/flb_tsfluentbithttpdlog.db
+        Mem_Buf_Limit     5MB
+        Skip_Long_Lines   On
+        Refresh_Interval  10
+    [INPUT]
+        Name              tail
+        Tag               httpd.error.stage
+        Path              /tsapplog/*error*log
+        DB                /tsapplog/flb_tsfluentbithttpdlog.db
+        Mem_Buf_Limit     5MB
+        Skip_Long_Lines   On
+        Refresh_Interval  10
+    [OUTPUT]
+        Name            s3
+        Match           *
+        bucket          tsfluendbitlog-us-east-1
+        region          us-east-1
+        upload_timeout  1m
+        total_file_size 10M 
+        s3_key_format   /$TAG[2]_$TAG[0]_$TAG[1]/%Y%m%d%H%M%S_$UUID.log
+        s3_key_format_tag_delimiters .-
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluent-bit
+  namespace: logging
+  labels:
+    k8s-app: fluent-bit-logging
+    version: v1
+    kubernetes.io/cluster-service: "true"
+spec:
+  selector:
+    matchLabels:
+      k8s-app: fluent-bit-logging
+  template:
+    metadata:
+      labels:
+        k8s-app: fluent-bit-logging
+        version: v1
+        kubernetes.io/cluster-service: "true"
+    spec:
+      containers:
+      - name: fluent-bit
+        image: fluent/fluent-bit:1.8
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 2020
+        command: ["/fluent-bit/bin/fluent-bit", "-c"]
+        args:
+        - /fluent-bit/etc/fluent-bit.conf
+        volumeMounts:
+        - name: applog
+          mountPath: /tsapplog
+        - name: fluent-bit-config
+          mountPath: /fluent-bit/etc/
+      terminationGracePeriodSeconds: 10
+      volumes:
+      - name: applog
+        hostPath:
+          path: /var/log/tsfluentbithttpdlog
+      - name: fluent-bit-config
+        configMap:
+          name: fluent-bit-config
+      serviceAccountName: fluent-bit
+
