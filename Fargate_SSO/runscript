@@ -1,0 +1,5 @@
+docker build --tag tansong0091/httpd-oidc:test-only
+docker push tansong0091/httpd-oidc:test-only
+aws ecs register-task-definition --cli-input-json file://tstest_task.json --no-verify-ssl
+aws ecs create-service --cli-input-json file://create-svc.json
+aws ecs update-service --cli-input-json file://update-svc.json

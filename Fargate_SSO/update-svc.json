@@ -1,7 +1,7 @@
 {
     "cluster": "tstest",
     "service": "tstest-svc",
-    "desiredCount": 1, 
+    "desiredCount": 0, 
     "taskDefinition": "tstest-fargate-task:2",
     "deploymentConfiguration": {
         "maximumPercent": 200,
@@ -12,10 +12,10 @@
     "networkConfiguration": {
         "awsvpcConfiguration": {
              "subnets": [
-                  "subnet-0d16fa0c969f234d3"
+                  "subnet-2676ed41"
              ],
              "securityGroups": [
-                  "sg-0b6d093d52d48bba9"
+                  "sg-01ff11d67f2a9115e"
              ],
             "assignPublicIp": "ENABLED"
         }

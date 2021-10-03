@@ -1,11 +1,11 @@
 {
     "family": "tstest-fargate-task",
-    "executionRoleArn": "arn:aws-cn:iam::123456789012:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::252557384592:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
     "containerDefinitions": [
         {
             "name": "fargate-app1",
-            "image": "httpd:2.4",
+            "image": "tansong0091/httpd-oidc:test-only",
             "portMappings": [
                 {
                     "containerPort": 80,
