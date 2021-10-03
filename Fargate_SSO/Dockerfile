@@ -1,4 +1,4 @@
-FROM httpd:2.4
+FROM docker2021repos/httpd:2.4
 
 RUN apt-get  update -y \
     && apt-get install -y apt-utils
