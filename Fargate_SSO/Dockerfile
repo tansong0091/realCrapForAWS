@@ -17,6 +17,7 @@ COPY entrypoint.sh /entrypoint.sh
 COPY conf/oidc.conf /usr/local/apache2/conf/
 COPY conf/httpd.conf /usr/local/apache2/conf/
 
-
+RUN chmod 755 /entrypoint.sh
 
 EXPOSE 80 22
+ENTRYPOINT ["/entrypoint.sh"]
